@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', validateUserId, async (req, res) => {
+router.get('/:id', validatePostId, async (req, res) => {
     try {
         const { id } = req.params;
         const actionsByid = await Projects.get(id);
@@ -23,7 +23,7 @@ router.get('/:id', validateUserId, async (req, res) => {
     }
 });
 
-router.post('/', validateUser, async (req, res) => {
+router.post('/', validatePost, async (req, res) => {
     try {
         const { name, description, completed } = req.body;
         const createPost = await Projects.insert({ name, description, completed });
@@ -33,7 +33,7 @@ router.post('/', validateUser, async (req, res) => {
     }
 });
 
-router.put('/:id', validateUser, async (req, res) => {
+router.put('/:id', validatePost, async (req, res) => {
     try {
         const { id } = req.params;
         const { name, description, completed } = req.body;
@@ -44,7 +44,7 @@ router.put('/:id', validateUser, async (req, res) => {
     }
 })
 
-router.delete('/:id', validateUserId, async (req, res) => {
+router.delete('/:id', validatePostId, async (req, res) => {
     try {
         const { id } = req.params;
         const remove = await Projects.remove(id);
@@ -54,7 +54,7 @@ router.delete('/:id', validateUserId, async (req, res) => {
     }
 })
 
-router.get('/:id/actions', validateUserId, async (req, res) => {
+router.get('/:id/actions', validatePostId, async (req, res) => {
     try {
         const { id } = req.params;
         const actions = await Projects.getProjectActions(id);
@@ -66,7 +66,7 @@ router.get('/:id/actions', validateUserId, async (req, res) => {
 
 
 
-function validateUser(req, res, next) {
+function validatePost(req, res, next) {
     // do your magic
     if (!req.body.name || !req.body.description || !req.body.completed) {
         res.status(400).json({ message: 'missing required field' });
@@ -75,7 +75,7 @@ function validateUser(req, res, next) {
     }
 }
 
-async function validateUserId(req, res, next) {
+async function validatePostId(req, res, next) {
     // do your magic!  
     try {
         const User = await Projects.get(req.params.id);

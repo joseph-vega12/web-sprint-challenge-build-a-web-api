@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', validateUserId, async (req, res) => {
+router.get('/:id', validatePostId, async (req, res) => {
     try {
         const { id } = req.params;
         const actionsByid = await Actions.get(id);
@@ -44,7 +44,7 @@ router.put('/:id', validatePost, async (req, res) => {
     }
 })
 
-router.delete('/:id', validateUserId, async (req, res) => {
+router.delete('/:id', validatePostId, async (req, res) => {
     try {
         const { id } = req.params;
         const remove = await Actions.remove(id);
@@ -63,7 +63,7 @@ function validatePost(req, res, next) {
     }
 }
 
-async function validateUserId(req, res, next) {
+async function validatePostId(req, res, next) {
     // do your magic!  
     try {
         const User = await Actions.get(req.params.id);
