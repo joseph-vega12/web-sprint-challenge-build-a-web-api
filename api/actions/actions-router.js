@@ -36,8 +36,8 @@ router.post('/', validatePost, async (req, res) => {
 router.put('/:id', validatePost, async (req, res) => {
     try {
         const { id } = req.params;
-        const { description, notes, project_id } = req.body;
-        const updateActionById = await Actions.update(id, { description, notes, project_id });
+        const { description, notes, project_id, completed } = req.body;
+        const updateActionById = await Actions.update(id, { description, notes, project_id, completed});
         res.json(updateActionById);
     } catch (err) {
         res.json(err.message);
